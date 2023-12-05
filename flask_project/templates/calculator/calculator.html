@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}구구단 결과{% endblock %}
+{% block content %}
+<div class="container">
+	<h1>웹 기반 계산기</h1>
+
+	<form method="POST" action="/calculator/calculate">
+		<div class="form-group">
+			<input type="text" class="form-control" name="expression" placeholder="계산식 입력" value="{{ expression }}">
+		</div>
+		<button type="submit" class="btn btn-dark">계산</button>
+	</form>
+
+	{% if result is defined %}
+	<h2>결과: {{ result }}</h2>
+	{% endif %}
+
+	{% if error is defined %}
+	<h2>오류: 계산식을 확인하세요.</h2>
+	{% endif %}
+</div>
+{% endblock %}

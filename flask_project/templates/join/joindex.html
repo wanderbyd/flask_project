@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}회원 로그인{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">회원 목록</h1>
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>가입일</th>
+                <th>전화번호</th>
+                <th>탈퇴 여부</th>
+                <th>작업</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            {% if member.id != 'admin' %}
+      
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.joindate.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ member.phone }}</td>
+                <td>{{ member.iswithrew }}</td>
+                <td>
+                    {% if current_user.is_authenticated and current_user.id == member.id %}
+                        <a href="{{ url_for('join.edit_member', id=member.id) }}" class="btn btn-primary">수정</a>
+              
+                        <a href="{{ url_for('join.delete_member', id=member.id) }}" class="btn btn-primary">삭제</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('join.add_member') }}" class="btn btn-success">새 회원 추가</a>
+</div>
+{% endblock %}

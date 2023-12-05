@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}놀이터{% endblock %}
+{% block content %}
+<style>
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vh; 
+    }
+</style>
+<div class="centered">
+    <img src="{{ url_for('static', filename='fly.gif') }}" alt="그림" width="500" height="750">
+</div>
+{% endblock %}

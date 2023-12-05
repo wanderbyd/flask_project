@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}게시판{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>게시판</title>
+</head>
+<body>
+	<h1>게시판</h1>
+	<!-- 게시글 목록 표시 -->
+	<ul>
+		{% for post in posts %}
+		<li>{{ post.content }}</li>
+		{% endfor %}
+	</ul>
+
+	<!-- 게시글 작성 폼 -->
+	<h2>새로운 게시글 작성</h2>
+	<form method="POST" action="{{ url_for('board.create_post') }}">
+		<textarea id="content" name="content" rows="5" required></textarea><br><br>
+		<input type="submit" value="게시글 작성">
+	</form>
+
+	<a href="{{ url_for('menu') }}">홈으로 돌아가기</a>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}거래내역 수정{% endblock %}
+{% block content %}
+    <h1 class="text-center">거래내역 수정</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" action="{{ url_for('unique_homebook.update_homebook_proc', sn=transaction.sn) }}">
+                    <input type="hidden" name="sn" value="{{ transaction.sn }}">
+                    <div class="form-group">
+                        <label for="transaction_date">거래일자:</label>
+                        <input type="text" class="form-control" name="transaction_date" value="{{ transaction.transaction_date }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id">회원 ID:</label>
+                        <input type="text" class="form-control" name="id" value="{{ transaction.id }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transaction_type">수입/지출:</label>
+                        <input type="text" class="form-control" name="transaction_type" value="{{ transaction.transaction_type }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="account_subject">계정과목:</label>
+                        <input type="text" class="form-control" name="account_subject" value="{{ transaction.account_subject }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">적요:</label>
+                        <input type="text" class="form-control" name="description" value="{{ transaction.description }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="credit">차변(수입):</label>
+                        <input type="text" class="form-control" name="credit" value="{{ transaction.credit }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="debit">대변(지출):</label>
+                        <input type="text" class="form-control" name="debit" value="{{ transaction.debit }}" required>
+                    </div>
+
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary" value="수정">
+                <a href="{{ url_for('unique_homebook.homebook_home') }}" class="btn btn-secondary">뒤로 가기</a>
+                    </div>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

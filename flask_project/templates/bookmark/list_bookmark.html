@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}북마크리스트{% endblock %}
+{% block content %}
+<style>
+    /* 추가된 스타일 */
+    body {
+        padding: 20px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .user-info {
+        margin-bottom: 10px;
+    }
+
+    .btn-group {
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .btn-edit {
+        margin-right: 5px;
+    }
+
+    .btn-delete {
+        margin-left: 5px;
+    }
+</style>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>url</th>
+            <th>추천자</th>
+            <th>작업</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in bookmarks %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.title }}</td>
+            <td><a href="{{ row.url }}" target="_blank">{{ row.url }}</a></td>
+            <td>{{ row.member }}</td>
+            <td>
+                {% if current_user.is_authenticated and current_user.id == row.member %}
+                <div class="btn-group" role="group">
+                    <form action="{{ url_for('unique_bookmark.update_bookmark') }}" method="POST">
+                        <input type="hidden" name="id" value="{{ row.id }}">
+                        <input class="btn btn-primary btn-sm btn-edit" type="submit" value="수정">
+                    </form>
+                    <form action="{{ url_for('unique_bookmark.delete_bookmark') }}" method="POST">
+                        <input type="hidden" name="id" value="{{ row.id }}">
+                        <input class="btn btn-danger btn-sm btn-delete" type="submit" value="삭제">
+                    </form>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>북마크 추천할건가요? <a href="{{ url_for('unique_bookmark.add_bookmark_form') }}">북마크추천</a></p>
+{% endblock %}
+
+

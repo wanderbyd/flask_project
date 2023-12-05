@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}회원목록{% endblock %}
+{% block content %}
+<style>
+	/* 추가된 스타일 */
+	body {
+		padding: 20px;
+	}
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	.user-info {
+		margin-bottom: 10px;
+	}
+
+	.btn-group {
+		margin-bottom: 10px;
+	}
+
+	table {
+		width: 100%;
+	}
+
+	th,
+	td {
+		text-align: center;
+		vertical-align: middle !important;
+	}
+
+	.btn-edit {
+		margin-right: 5px;
+	}
+
+	.btn-delete {
+		margin-left: 5px;
+	}
+</style>
+
+{% if session['user'] %}
+  <p>접속자: {{ session['user'] }}</p>
+{% endif %}
+<table class="table table-striped table-bordered">
+	<thead class="thead-dark">
+		<tr>
+			<th>NO</th>
+			<th>ID</th>
+			<th>가입일</th>
+			<th>암호</th>
+			<th>전화번호</th>
+			<th>탈퇴 여부</th>
+			<th>작업</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in members %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+			<td>{{ row[3] }}</td>
+			<td>{{ row[4] }}</td>
+			<td>{{ row[5] }}</td>
+			{% if session['user'] and session['user'] == row[1] %}
+			<td>
+				<div class="btn-group" role="group">
+
+
+
+					<form action="{{ url_for('join.edit_member') }}" method="POST">
+						<input type="hidden" name="no" value="{{ row[0] }}">
+						<input class="btn btn-primary btn-sm btn-edit" type="submit" value="수정">
+					</form>
+
+					<form action="{{ url_for('join.delete_member') }}" method="POST">
+						<input type="hidden" name="no" value="{{ row[0] }}">
+						<input class="btn btn-primary btn-sm btn-edit" type="submit" value="삭제">
+					</form>
+
+					
+				</div>
+			</td>
+			{% else %}
+			<td></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

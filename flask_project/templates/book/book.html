@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% block title %}도서관{% endblock %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>도서 목록</title>
+	<style>
+		body {
+			background-color: rgb(255, 255, 255);
+			font-family: "Roboto", helvetica, arial, sans-serif;
+			font-size: 16px;
+			font-weight: 400;
+			text-rendering: optimizeLegibility;
+		}
+		div.table-title {
+			display: block;
+			margin: auto;
+			max-width: 600px;
+			padding: 5px;
+
+			width: 10%;
+		}
+		.table-title h3 {
+			color: #fafafa;
+			font-size: 30px;
+			font-weight: 400;
+			font-style: normal;
+			font-family: "Roboto", helvetica, arial, sans-serif;
+			text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+			text-transform: uppercase;
+		}
+		.table-fill {
+			background: white;
+			border-radius: 3px;
+			border-collapse: collapse;
+			height: 320px;
+			margin: auto;
+			max-width: 600px;
+			padding: 5px;
+			width: 100%;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+			animation: float 5s infinite;
+		}
+		th {
+			color: #D5DDE5;
+			;
+			background: #1b1e24;
+			border-bottom: 4px solid #9ea7af;
+			border-right: 1px solid #343a45;
+			font-size: 23px;
+			font-weight: 100;
+			padding: 24px;
+			text-align: center;
+			text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+			vertical-align: middle;
+		}
+		th:first-child {
+			border-top-left-radius: 3px;
+		}
+		th:last-child {
+			border-top-right-radius: 3px;
+			border-right: none;
+		}
+		tr {
+			border-top: 1px solid #C1C3D1;
+			border-bottom: 1px solid #C1C3D1;
+			color: #666B85;
+			font-size: 16px;
+			font-weight: normal;
+			text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+		}
+		tr:hover td {
+			background: #4E5066;
+			color: #FFFFFF;
+			border-top: 1px solid #22262e;
+		}
+		tr:first-child {
+			border-top: none;
+		}
+		tr:last-child {
+			border-bottom: none;
+		}
+		tr:nth-child(odd) td {
+			background: #EBEBEB;
+		}
+		tr:nth-child(odd):hover td {
+			background: #4E5066;
+		}
+		tr:last-child td:first-child {
+			border-bottom-left-radius: 3px;
+		}
+		tr:last-child td:last-child {
+			border-bottom-right-radius: 3px;
+		}
+		td {
+			background: #FFFFFF;
+			padding: 20px;
+			text-align: center;
+			vertical-align: middle;
+			font-weight: 300;
+			font-size: 18px;
+			text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+			border-right: 1px solid #C1C3D1;
+		}
+		td:last-child {
+			border-right: 0px;
+		}
+		th.text-left {
+			text-align: left;
+		}
+		th.text-center {
+			text-align: center;
+		}
+		th.text-right {
+			text-align: right;
+		}
+		td.text-left {
+			text-align: left;
+		}
+		td.text-center {
+			text-align: center;
+		}
+		td.text-right {
+			text-align: right;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>도서 목록</h1>
+
+	<!-- 도서 목록을 표시할 테이블 -->
+	<table border="1">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>도서명</th>
+				<th>등록일</th>
+				<th>작가</th>
+				<th>출판사</th>
+				<th>철수 여부</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for book in books %}
+			<tr>
+				<td>{{ book[0] }}</td>
+				<td>{{ book[1] }}</td>
+				<td>{{ book[2] }}</td>
+				<td>{{ book[3] }}</td>
+				<td>{{ book[4] }}</td>
+				<td>{{ book[5] }}</td>
+				<td><a href="{{ url_for('book.update_book', no=book[0]) }}">수정</a></td>
+				<td><a href="{{ url_for('book.delete_book', no=book[0]) }}">삭제</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<hr>
+
+	<div class="container">
+		<h2>도서 등록</h2>
+		<form method="POST" action="/book/create_book">
+			<div class="form-group">
+				<label for="bookname">도서명:</label>
+				<input type="text" id="bookname" name="bookname"class="form-control" required>
+				<br>
+			</div>
+
+			<div class="form-group">
+				<label for="writer">작가:</label>
+				<input type="text" id="writer" name="writer" class="form-control"required>
+				<br>
+			</div>
+
+			<div class="form-group">
+				<label for="publisher">출판사:</label>
+				<input type="text" id="publisher" name="publisher" class="form-control"required>
+				<br>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-dark">등록</button>
+		</form>
+	</div>
+</body>
+
+</html>
+{% endblock %}

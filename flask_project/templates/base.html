@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>{% block title %}Flask Menu{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-warning fixed-top"> <!-- 바탕색을 설정 -->
+        <a class="navbar-brand" href="/">🐱‍🏍</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('book.create_book') }}"style="color: rgb(255, 255, 255);">어린이도서관</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('unique_homebook.homebook_home') }}"style="color: rgb(255, 255, 255);">어린이가계부</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('gugudan.gugudan_home') }}"style="color: rgb(255, 255, 255);">구구단출력</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('calculator.calculator_home') }}"style="color: rgb(255, 255, 255);">계산기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('board.create_post') }}"style="color: rgb(255, 255, 255);">게시판</a>
+                </li>
+                	<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('unique_bookmark.bookmark_home') }}"style="color: rgb(255, 255, 255);">북마크</a>
+				</li>
+			
+            </ul>
+            <ul class="navbar-nav ml-auto">
+				{% if current_user.is_authenticated %}<!-- 세션 키 이름 수정 -->
+				<li class="nav-item">
+					<span class="navbar-text mr-3">Hello:)　{{ current_user.id}}!</span>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('login.logout') }}">로그아웃</a>
+				</li>
+				{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('login.login') }}">로그인</a>
+				</li>
+				{% endif %}
+
+				{% if 'username' in session %}
+				<li class="nav-item">
+					<span class="navbar-text mr-3">로그인 되었음</span>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('login.logout') }}">로그아웃</a>
+				</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('join.index') }}">회원관리</a>
+				</li>
+			</ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <br><br><br>
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap 스크립트 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

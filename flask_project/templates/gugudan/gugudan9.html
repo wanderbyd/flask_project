@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구구단 출력</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* 추가된 스타일 */
+    body {
+        padding: 20px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .user-info {
+        margin-bottom: 10px;
+    }
+
+    .btn-group {
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse; /* 테이블 셀 사이의 간격 제거 */
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    th {
+        background-color: #ffffcc; /* 청색 */
+        color: black; /* 흰색 텍스트 */
+    }
+
+    tr:nth-child(odd) {
+        background-color: #e6f2ff; /* 녹색 */
+    }
+
+    tr:nth-child(even) {
+        background-color: #ffe6ff; /* 청색 */
+        color: black; /* 흰색 텍스트 */
+    }
+
+    .btn-edit {
+        margin-right: 5px;
+    }
+
+    .btn-delete {
+        margin-left: 5px;
+    }
+</style>
+</head>
+<body>
+<h1>구구단 계산</h1>
+<form method="POST">
+    <label for="dan">단을 입력하세요: </label>
+    <input type="number" id="dan" name="dan" min="1" max="99" required>
+    <input type="submit" value="계산">
+</form>
+
+{% if dan %}
+<h2>{{ dan }}단 결과:</h2>
+<table border="1">
+    <tr>
+        <th>단수</th>
+        <th>승수</th>
+        <th>결과</th>
+    </tr>
+    {% for d, x, result in result %}
+    <tr>
+        <td>{{ d }}</td>
+        <td>{{ x }}</td>
+        <td>{{ result }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</body>
+</html>

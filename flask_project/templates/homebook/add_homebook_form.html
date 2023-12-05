@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}가계부 등록{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">거래 등록</h1>
+    <hr>
+    <form class="col-md-6 offset-md-3" method="post" action="{{ url_for('unique_homebook.add_homebook') }}">
+        <div class="form-group">
+            <label for="transaction_date">거래 일자:</label>
+            <input type="text" class="form-control" name="transaction_date" required>
+        </div>
+
+        {% if session['authenticated'] %}
+        <!-- If the user is logged in, pre-fill the "등록 회원" field with their ID -->
+        <div class="form-group">
+            <label for="id">회원 ID:</label>
+            <input type="text" class="form-control" name="id" value="{{ session['user'] }}" readonly>
+        </div>
+        {% else %}
+        <!-- If the user is not logged in, allow them to input the "회원 ID" field -->
+        <div class="form-group">
+            <label for="id">회원 ID:</label>
+            <input type="text" class="form-control" name="id" required>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="transaction_type">수입/지출:</label>
+            <input type="text" class="form-control" name="transaction_type" required>
+        </div>
+
+        <div class="form-group">
+            <label for="account_subject">계정과목:</label>
+            <input type="text" class="form-control" name="account_subject" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">적요:</label>
+            <input type="text" class="form-control" name="description" required>
+        </div>
+
+        <div class="form-group">
+            <label for="credit">차변(수입):</label>
+            <input type="text" class="form-control" name="credit" required>
+        </div>
+
+        <div class="form-group">
+            <label for="debit">대변(지출):</label>
+            <input type="text" class="form-control" name="debit" required>
+        </div>
+           <div class="text-center">
+        <button type="submit" class="btn btn-primary">추가</button>
+    <a class="btn btn-secondary" href="{{ url_for('unique_homebook.homebook_home') }}">뒤로 가기</a>
+      </div>
+    </form>
+    <br>
+</div>
+{% endblock %}

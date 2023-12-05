@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}회원 추가{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">새 회원 추가</h1>
+    <form method="POST" class="mt-3">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" name="id" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호:</label>
+            <input type="text" name="phone" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="iswithrew">탈퇴 여부:</label>
+            <select name="iswithrew" class="form-control" required>
+                <option value="Y">탈퇴</option>
+                <option value="N">정상</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">추가</button>
+    </form>
+    <a href="{{ url_for('login.login') }}" class="btn btn-secondary mt-3">뒤로 가기</a>
+</div>
+{% endblock %}
